@@ -18,17 +18,30 @@ int main(void)
     Eratosthenes(bset); // Creating bitset with prime numbers
 
     unsigned long primes[AMOUNT];
+<<<<<<< HEAD
     int counter = AMOUNT-1;
 
     for (bitset_index_t i = N-1; i > 1; i--) //loop backwards
+=======
+    int counter = 0;
+
+    for (bitset_index_t i = N; i > 1; i--) //loop backwards
+>>>>>>> 902ba266b17ea5aae4d0e69cd54665c381717264
     {
         if (bitset_getbit(bset, i) == 0)
         {
             primes[counter] = i;
+<<<<<<< HEAD
             counter--;
         }
 
         if (counter < 0)
+=======
+            counter++;
+        }
+
+        if (counter == AMOUNT)
+>>>>>>> 902ba266b17ea5aae4d0e69cd54665c381717264
             break;
     }
 
