@@ -1,9 +1,9 @@
+#@todo rewrite makefile
 CC=gcc
-CFLAGS=-m32 -g -std=c11 -Wall -Wextra -pedantic -fsanitize=address
+CFLAGS=-m32 -O2 -g -std=c11 -Wall -Wextra -pedantic -fsanitize=address
 
-test: bitset.c bitset.h
-	$(CC) $< -o $@ $(CFLAGS)
+src=primes.c bitset.h eratosthenes.c eratosthenes.h
 
-CFLAGS+=-lm
-primes: eratosthenes.c
-	$(CC) $< -o $@ $(CFLAGS)
+primes: $(src)
+	$(CC) $(CFLAGS) $< eratosthenes.c -lm -o $@
+
