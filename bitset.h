@@ -6,13 +6,15 @@
  *@details Compiled with gcc 9.3
  */
 
+#ifndef BITSET_H
+#define BITSET_H
+
+#include <limits.h>
+
 typedef unsigned long* bitset_t;
 typedef unsigned long bitset_index_t;
 
-/// @todo Add comments to these too!
 #define SIZE_ERROR "Velkost pola musi byt vacsia ako 0"
-#define MALLOC_ERROR "bitset_alloc: Chyba alokace pameti"
-
 #define ITEM_SIZE (sizeof(unsigned long)*CHAR_BIT)
 
 /**
@@ -68,3 +70,5 @@ typedef unsigned long bitset_index_t;
  */
 #define bitset_getbit(name, index)\
     ((name[index/ITEM_SIZE+1] >> (index%ITEM_SIZE)) & 1L)
+
+#endif
