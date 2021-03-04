@@ -9,6 +9,7 @@
 #ifndef BITSET_H
 #define BITSET_H
 
+#include <stdlib.h>
 #include <limits.h>
 
 typedef unsigned long* bitset_t;
