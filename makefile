@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-m32 -O0 -g -std=c11 -Wall -Wextra -pedantic
+CFLAGS=-O0 -g -std=c11 -Wall -Wextra -pedantic
 
 src=eratosthenes.h bitset.h
 
@@ -32,4 +32,4 @@ run:
 	ulimit -s 25000; ./primes-i
 clean:
 	rm -f primes.o eratosthenes.o
-	rm -f primes-i.o eratosthenes-i.o
+	rm -f primes-i.o eratosthenes-i.o bitset.o
