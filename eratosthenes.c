@@ -1,8 +1,9 @@
 /**
- * @brief Implementation of eratosthenes function 
+ * @brief Implementation of eratosthenes function, task A) - IJC-DU1 
  * @file eratosthenes.c
- * @author: Adam Zvara, xzvara01
- * @date 3.3.2021
+ * @author Adam Zvara - xzvara01, FIT
+ * @date 6.3.2021
+ * @details Compiled with gcc 9.3.0 - Ubuntu 20.04.1 
  */
 
 #include <math.h>

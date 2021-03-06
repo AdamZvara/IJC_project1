@@ -1,8 +1,10 @@
 /**
- * @brief Using eratosthenes sieve to calculate prime numbers.
+ * @brief Printing last 10 prime numbers up to 200 milion, task A) - IJC-DU1
  * @file primes.c
- * @author Adam Zvara, xzvara01
- * @date 3.3.2021
+ * @author Adam Zvara - xzvara01, FIT
+ * @date 6.3.2021
+ * @details Compiled with gcc 9.3.0 - Ubuntu 20.04.1 
+
  */
 
 #include <stdio.h>
@@ -14,7 +16,7 @@
 
 int main(void)
 {
-    //clock_t begin = clock();
+    clock_t begin = clock();
 
     bitset_create(bset, N);
 
@@ -40,8 +42,8 @@ int main(void)
         printf("%lu\n", primes[i]);
     }
 
-    /*
+    
     clock_t end = clock();
     fprintf(stderr, "Time=%.3g\n", (double)(end-begin)/CLOCKS_PER_SEC); 
-    */
+   
 }

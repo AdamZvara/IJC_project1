@@ -1,3 +1,11 @@
+/**
+ * @brief Extern declaration of inline functions (CFLAGS=-O0), task A) - IJC-DU1
+ * @file bitset.c
+ * @author Adam Zvara - xzvara01, FIT
+ * @date 6.3.2021
+ * @details Compiled with gcc 9.3.0 - Ubuntu 20.04.1 
+ */
+
 #include "bitset.h"
 
 extern inline void bitset_free(bitset_t name);

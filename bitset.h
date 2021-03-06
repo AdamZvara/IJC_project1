@@ -1,9 +1,9 @@
 /**
- *@brief Implementation of bitset, project 1 - IJC.
- *@file bitset.h
- *@author Adam Zvara - xzvara01
- *@date 27.2.2021
- *@details Compiled with gcc 9.3
+ * @brief Implementation of bitset, task A) - IJC-DU1.
+ * @file bitset.h
+ * @author Adam Zvara - xzvara01, FIT
+ * @date 6.3.2021
+ * @details Compiled with gcc 9.3.0 - Ubuntu 20.04.1 
  */
 
 #ifndef BITSET_H
@@ -15,8 +15,9 @@
 typedef unsigned long* bitset_t;
 typedef unsigned long bitset_index_t;
 
-#define ITEM_SIZE (sizeof(unsigned long)*CHAR_BIT)
-#define MAX_LEN 200000000
+#define ITEM_SIZE (sizeof(unsigned long)*CHAR_BIT) //</Size of a single item in bitset
+#define MAX_LEN 200000000 //</Maximum range of dynamic allocated bitset
+
 #define SIZE_ERROR "Velkost pola musi byt v rozmedzi <0,2000000000>"
 
 /**
@@ -43,16 +44,27 @@ typedef unsigned long bitset_index_t;
     unsigned long *name = calloc(size/ITEM_SIZE+2, sizeof(unsigned long));\
     name[0] = size
     
-
+/**
+ * @brief Set a single bit in bitset to a given value.
+ * @param name Bitset name.
+ * @param index Index of the bit to change.
+ * @param value Binary value to insert.
+ */ 
 #define setbit(name, index, value)\
     ((value != 0) ? (name[index/ITEM_SIZE+1] |= 1L << (index%ITEM_SIZE))\
                   : (name[index/ITEM_SIZE+1] &= ~(1L << (index%ITEM_SIZE))))
 
+/**
+ * @brief Get a single bit value from bitset at given index.
+ * @param name Bitset name.
+ * @param index Index of the source bit.
+ */ 
 #define getbit(name, index)\
     ((name[index/ITEM_SIZE+1] >> (index%ITEM_SIZE)) & 1L)
 
 
 
+//Inline functions are similiar to macros defined underneath them.
 #ifdef USE_INLINE
 
     inline void bitset_free(bitset_t name)
@@ -79,7 +91,7 @@ typedef unsigned long bitset_index_t;
     /**
      * @brief Frees previously allocated bitset.
      * @param name Name of the bitset.
-     * @todo Figure out any ways to broke this  
+     * @todo Figure out any ways to break this  
      */
     #define bitset_free(name) free(name)
     
@@ -90,18 +102,20 @@ typedef unsigned long bitset_index_t;
     #define bitset_size(name) name[0]
     
     /**
-     * @brief Set single bit to a value at a given index.
+     * @brief Improved setbit macro with boundary values detection.
      * @param name Name of the bitset.
      * @param index Index of the bit.
-     * @param value Value to insert - 0 or 1
+     * @param value Binary value to insert.
+     * @todo boundary values detection
      */ 
     #define bitset_setbit(name, index, value)\
         setbit(name, index, value)
     
     /**
-     * @brief Get value from a bit at given index.
+     * @brief Improved getbit macro with boundary values detection.
      * @param name Name of the bitset.
      * @param index Index of source bit.
+     * @todo boundary values detection
      */
     #define bitset_getbit(name, index)\
         getbit(name, index)
