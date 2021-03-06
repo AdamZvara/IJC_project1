@@ -1,11 +1,11 @@
 CC=gcc
-CFLAGS=-O0 -g -std=c11 -Wall -Wextra -pedantic
+CFLAGS=-O2 -g -std=c11 -Wall -Wextra -pedantic
 
-src=eratosthenes.h bitset.h
+src=eratosthenes.h bitset.h error.h
 
 all: primes primes-i clean
 
-primes: primes.o eratosthenes.o
+primes: primes.o eratosthenes.o error.o
 	$(CC) $(CFLAGS) $^ -lm -o $@
 
 primes.o: primes.c $(src)
@@ -14,7 +14,7 @@ primes.o: primes.c $(src)
 eratosthenes.o: eratosthenes.c $(src)
 	$(CC) $(CFLAGS) -c $< 
 
-primes-i: primes-i.o eratosthenes-i.o bitset.o
+primes-i: primes-i.o eratosthenes-i.o bitset.o error.o
 	$(CC) $(CFLAGS) -DUSE_INLINE $^ -lm -o $@
 
 primes-i.o: primes.c $(src)
@@ -25,6 +25,9 @@ eratosthenes-i.o: eratosthenes.c $(src)
 
 bitset.o: bitset.c
 	$(CC) $(CFLAGS) -DUSE_INLINE -c $< 
+
+error.o: error.c error.h
+	$(CC) $(CFLAGS) -c $<
 
 run: 
 	make all
