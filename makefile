@@ -34,5 +34,5 @@ run:
 	ulimit -s 25000; ./primes
 	ulimit -s 25000; ./primes-i
 clean:
-	rm -f primes.o eratosthenes.o
+	rm -f primes.o eratosthenes.o error.o
 	rm -f primes-i.o eratosthenes-i.o bitset.o

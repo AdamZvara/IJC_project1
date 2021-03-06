@@ -1,1 +1,14 @@
-Prvy projekt predmetu IJC - implementacia bitoveho pola a eratostenovho sita.
+Prvy projekt predmetu IJC.
+
+Prva cast - implementacia vypoctu prvocisel pomocou eratosthenovho sita.
+    vytvorenie bitoveho pola - vsetky "funkcie" pre pracu s bitovym polom boli vytvorene ako 
+        makra - otravne ale efektivne pre program
+    zaujimavy sposob ukladania a ziskavania informacii (setbit a getbit) - celkovo 
+        praca s bitovym polom
+    praca s inline funkciami, optimalizaciami kompilatora a externymi definiciami pri inline
+        funkciach a vypnutych optimalizaciach
+    vytvorenie zakladneho makefile-u, kompilovanie projektu zlozeneho z viacerych casti
+    praca s gitom
+    zakladna strukturovana dokumentacia projektu pomocou doxygenu
+
+Druha cast - 
