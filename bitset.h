@@ -29,8 +29,8 @@ typedef unsigned long bitset_index_t;
  * @detail Creating bitset where size = 0 is possible. 
  */
 #define bitset_create(name, size)\
-    _Static_assert((size >= 0), SIZE_ERROR);\
-    unsigned long name[size/ITEM_SIZE+2] = {size}
+    unsigned long name[size/ITEM_SIZE+2] = {size};\
+    _Static_assert((size >= 0), SIZE_ERROR)
 
 /**
  * @brief Initialize bitset dynamically, first value is set to the size of bitset in bits.
@@ -39,11 +39,12 @@ typedef unsigned long bitset_index_t;
  * @detail Creating bitset where size = 0 is possible. 
  */
 #define bitset_alloc(name, size)\
-    _Static_assert((size >= 0), SIZE_ERROR);\
-    _Static_assert((size <= MAX_LEN), SIZE_ERROR);\
     unsigned long *name = calloc(size/ITEM_SIZE+2, sizeof(unsigned long));\
-    ((name == 0) ? (error_exit("bitset_alloc: Chyba alokace pameti\n"),0) : (name[0] = size))
-    
+    ((name == NULL) ? \
+        (error_exit("bitset_alloc: Chyba alokace pameti\n"),0) : \
+        (name[0] = size));\
+    _Static_assert((size >= 0), SIZE_ERROR);\
+    _Static_assert((size <= MAX_LEN), SIZE_ERROR)
 /**
  * @brief Set a single bit in bitset to a given value.
  * @param name Bitset name.

@@ -15,9 +15,9 @@
 
 int main(void)
 {
-    clock_t begin = clock();
+    //clock_t begin = clock();
 
-    bitset_create(bset, LENGTH);
+    bitset_alloc(bset, LENGTH);
     Eratosthenes(bset); // Creating bitset with prime numbers
 
     unsigned long primes[AMOUNT];
@@ -40,8 +40,8 @@ int main(void)
         printf("%lu\n", primes[i]);
     }
 
-    
+    /*
     clock_t end = clock();
     fprintf(stderr, "Time=%.3g\n", (double)(end-begin)/CLOCKS_PER_SEC);
-
+    */
 }
