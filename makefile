@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-O2 -g -std=c11 -Wall -Wextra -pedantic
+CFLAGS=-O0 -g -std=c11 -Wall -Wextra -pedantic
 
 src=eratosthenes.h bitset.h error.h
 
@@ -25,6 +25,12 @@ eratosthenes-i.o: eratosthenes.c $(src)
 
 bitset.o: bitset.c
 	$(CC) $(CFLAGS) -DUSE_INLINE -c $< 
+
+#ppm: ppm.o error.o
+#	$(CC) $(CFLAGS) $^ -o $@
+
+ppm.o: ppm.c ppm.h 
+	$(CC) $(CFLAGS) -c $< 
 
 error.o: error.c error.h
 	$(CC) $(CFLAGS) -c $<
