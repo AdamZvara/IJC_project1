@@ -15,8 +15,10 @@ void Eratosthenes(bitset_t bset)
 
     bitset_setbit(bset, 0, 1);
     bitset_setbit(bset, 1, 1);
+    
+    const double max = sqrt(length);
 
-    for (bitset_index_t i = 2; i < sqrt(length); i++)
+    for (bitset_index_t i = 2; i < max; i++)
     {
         if (bitset_getbit(bset, i) == 0)
         {

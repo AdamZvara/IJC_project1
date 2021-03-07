@@ -2,16 +2,20 @@
  * @brief Processing ppm image into structure.
  * @file ppm.c
  * @author Adam Zvara - xzvara01, FIT
- * @date 6.3.2021
+ * @date 7.3.2021
  * @details Compiled with gcc 9.3.0 - Ubuntu 20.04.1 
  */
-
 
 #include <ctype.h>
 #include "ppm.h"
 
-#define MAX_SIZE 8000
+#define MAX_SIZE 8000 //</Maximum witdh and height of picture.
 
+/**
+ * @brief Reading from .ppm file image.
+ * @param filename Name of file to open.
+ * @return ppm* Pointer to a dynamically allocated structure. 
+ */
 struct ppm * ppm_read(const char* filename)
 {
     FILE *fr = fopen(filename, "r");
@@ -23,9 +27,8 @@ struct ppm * ppm_read(const char* filename)
     }
 
     int xsize, ysize = 0;
-    int w1 = 0; //checking if there is a single whitespace after "header"
 
-    if ((fscanf(fr, "P6 %d %d 255%lc", &xsize, &ysize, &w1) != 3) || (isspace(w1) == 0))
+    if ((fscanf(fr, "P6 %d %d 255", &xsize, &ysize) != 2) || !(isspace(fgetc(fr))))
     {
         warning_msg("Nepodporovany format\n");
         fclose(fr);
@@ -58,9 +61,12 @@ struct ppm * ppm_read(const char* filename)
 
     fclose(fr);
     return image;
-
 }
 
+/**
+ * @brief Free previosly allocated ppm structure.
+ * @param ppm* Dynamically allocated ppm structure.
+ */
 void ppm_free(struct ppm *p)
 {
     free(p);

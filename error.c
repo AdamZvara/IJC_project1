@@ -6,8 +6,6 @@
  * @details Compiled with gcc 9.3.0 - Ubuntu 20.04.1 
  */
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <stdarg.h>
 #include "error.h"
 

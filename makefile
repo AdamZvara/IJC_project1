@@ -1,10 +1,11 @@
 CC=gcc
-CFLAGS=-O0 -g -std=c11 -Wall -Wextra -pedantic
+CFLAGS=-m32 -O2 -g -std=c11 -Wall -Wextra -pedantic
 
 src=eratosthenes.h bitset.h error.h
 
-all: primes primes-i clean
+all: primes primes-i steg-decode clean
 
+#primes with macros
 primes: primes.o eratosthenes.o error.o
 	$(CC) $(CFLAGS) $^ -lm -o $@
 
@@ -14,6 +15,7 @@ primes.o: primes.c $(src)
 eratosthenes.o: eratosthenes.c $(src)
 	$(CC) $(CFLAGS) -c $< 
 
+#primes with inline functions
 primes-i: primes-i.o eratosthenes-i.o bitset.o error.o
 	$(CC) $(CFLAGS) -DUSE_INLINE $^ -lm -o $@
 
@@ -23,22 +25,28 @@ primes-i.o: primes.c $(src)
 eratosthenes-i.o: eratosthenes.c $(src)
 	$(CC) $(CFLAGS) -DUSE_INLINE -c $< -o $@
 
+#inline functions with -O0
 bitset.o: bitset.c
 	$(CC) $(CFLAGS) -DUSE_INLINE -c $< 
 
-#ppm: ppm.o error.o
-#	$(CC) $(CFLAGS) $^ -o $@
+error.o: error.c error.h
+	$(CC) $(CFLAGS) -c $<
+
+#decoding
+steg-decode: steg-decode.o ppm.o error.o eratosthenes.o
+	$(CC) $(CFLAGS) $^ -lm -o $@
+
+steg-decode.o: steg-decode.c ppm.h eratosthenes.h
+	$(CC) $(CFLAGS) -c $<
 
 ppm.o: ppm.c ppm.h 
 	$(CC) $(CFLAGS) -c $< 
 
-error.o: error.c error.h
-	$(CC) $(CFLAGS) -c $<
 
 run: 
 	make all
 	ulimit -s 25000; ./primes
 	ulimit -s 25000; ./primes-i
+	./steg-decode du1-obrazek.ppm
 clean:
-	rm -f primes.o eratosthenes.o error.o
-	rm -f primes-i.o eratosthenes-i.o bitset.o
+	rm *.o

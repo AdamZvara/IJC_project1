@@ -17,7 +17,7 @@ int main(void)
 {
     //clock_t begin = clock();
 
-    bitset_alloc(bset, LENGTH);
+    bitset_create(bset, LENGTH);
     Eratosthenes(bset); // Creating bitset with prime numbers
 
     unsigned long primes[AMOUNT];

@@ -11,6 +11,7 @@
 
 #include <stdlib.h>
 #include <limits.h>
+#include <assert.h>
 #include "error.h"
 
 typedef unsigned long* bitset_t;
@@ -43,8 +44,8 @@ typedef unsigned long bitset_index_t;
     ((name == NULL) ? \
         (error_exit("bitset_alloc: Chyba alokace pameti\n"),0) : \
         (name[0] = size));\
-    _Static_assert((size >= 0), SIZE_ERROR);\
-    _Static_assert((size <= MAX_LEN), SIZE_ERROR)
+    assert(size >= 0);\
+    assert(size <= MAX_LEN)
 /**
  * @brief Set a single bit in bitset to a given value.
  * @param name Bitset name.
