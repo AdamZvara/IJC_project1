@@ -12,7 +12,17 @@
 #ifndef ERROR_H
 #define ERROR_H
 
+/**
+ * @brief Prints out warning message without exiting the program.
+ * @param fmt Format of the printed out message
+ */
 void warning_msg(const char *fmt, ...);
+
+
+/**
+ * @brief Prints out warning message and exits.
+ * @param fmt Format of the printed out message.
+ */
 void error_exit(const char *fmt, ...);
 
 #endif

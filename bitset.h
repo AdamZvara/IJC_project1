@@ -3,7 +3,7 @@
  * @file bitset.h
  * @author Adam Zvara - xzvara01, FIT
  * @date 9.3.2021
- * @details Compiled with gcc 9.3.0, tested on Ubuntu 20.04.1 
+ * @details Bits are indexed from 0 to size of the bitset -1. Compiled with gcc 9.3.0, tested on Ubuntu 20.04.1.
  */
     
 #ifndef BITSET_H
@@ -125,23 +125,25 @@ typedef unsigned long bitset_index_t;
      * @param name Name of the bitset.
      * @param index Index of the bit.
      * @param value Binary value to insert.
+     * @details Index is converted to unsigned long.
+     * @todo For value < 0 compiler throws warning
      */ 
     #define bitset_setbit(name, index, value)\
-        ((index >= bitset_size(name)) ? \
+        (((unsigned long)index >= bitset_size(name)) ? \
          (error_exit("bitset_setbit: Index %lu mimo rozsah 0..%lu\n", \
-             (unsigned long)index, (unsigned long)bitset_size(name)-1), 0) : \
+             (unsigned long)index, (unsigned long)bitset_size(name)-1), 1) : \
          (setbit(name, index, value)))
     
     /**
      * @brief Improved getbit macro with boundary values detection.
      * @param name Name of the bitset.
      * @param index Index of source bit.
+     * @details Index is converted to unsigned long.
      */
     #define bitset_getbit(name, index)\
-        index
-        //((index >= bitset_size(name)) ? \
+        (((unsigned long)index >= bitset_size(name)) ? \
          (error_exit("bitset_getbit: Index %lu mimo rozsah 0..%lu\n", \
-             (unsigned long)index, (unsigned long)bitset_size(name)-1), 0) : \
+             (unsigned long)index, (unsigned long)bitset_size(name)-1), 1) : \
          (getbit(name, index)))
 #endif
 
