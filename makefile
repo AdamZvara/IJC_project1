@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-m32 -O2 -g -std=c11 -Wall -Wextra -pedantic
+CFLAGS=-m32 -O0 -g -std=c11 -Wall -Wextra -pedantic
 
 src=eratosthenes.h bitset.h error.h
 
@@ -42,6 +42,16 @@ steg-decode.o: steg-decode.c ppm.h eratosthenes.h
 ppm.o: ppm.c ppm.h 
 	$(CC) $(CFLAGS) -c $< 
 
+
+#testing
+check: test_bitset clean
+
+test_bitset: bitset_h_test.o eratosthenes.o error.o
+	$(CC) $(CFLAGS) $^ -lm -o $@
+
+bitset_h_test.o: bitset_h_test.c bitset.h
+	$(CC) $(CFLAGS) -c $<
+#ending testing
 
 run: 
 	make all

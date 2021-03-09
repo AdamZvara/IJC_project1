@@ -2,8 +2,8 @@
  * @brief Implementation of bitset, task A) - IJC-DU1.
  * @file bitset.h
  * @author Adam Zvara - xzvara01, FIT
- * @date 6.3.2021
- * @details Compiled with gcc 9.3.0 - Ubuntu 20.04.1 
+ * @date 9.3.2021
+ * @details Compiled with gcc 9.3.0, tested on Ubuntu 20.04.1 
  */
     
 #ifndef BITSET_H
@@ -18,12 +18,13 @@ typedef unsigned long* bitset_t;
 typedef unsigned long bitset_index_t;
 
 #define ITEM_SIZE (sizeof(unsigned long)*CHAR_BIT) //</Size of a single item in bitset
-#define MAX_LEN 200000000 //</Maximum range of bitset
+#define MAX_LEN 200000000 //</Maximum range of dynamically allocated bitset
 
 /**
  * @brief Initialize bitset, first value is set to the size of bitset in bits.
  * @param name Name of a new bitset.
  * @param size Size of bitset in bits.
+ * @details Only works with whole numbers (int, long, unsigned long ..).
  */
 #define bitset_create(name, size)\
     unsigned long name[\
@@ -34,14 +35,17 @@ typedef unsigned long bitset_index_t;
  * @brief Initialize bitset dynamically, first value is set to the size of bitset in bits.
  * @param name Name of a new bitset.
  * @param size Size of bitset in bits. 
+ * @details Only works with whole numbers (int, long, unsigned long ..).
  */
 #define bitset_alloc(name, size)\
-    unsigned long *name = calloc(size/ITEM_SIZE+2, sizeof(unsigned long));\
+    unsigned long *name = calloc(\
+        ((size%ITEM_SIZE) ? (size/ITEM_SIZE+2) : (size/ITEM_SIZE+1)), sizeof(unsigned long));\
     ((name == NULL) ? \
         (error_exit("bitset_alloc: Chyba alokace pameti\n"),0) : \
         (name[0] = size));\
     assert(size > 0);\
     assert(size <= MAX_LEN)
+
 /**
  * @brief Set a single bit in bitset to a given value.
  * @param name Bitset name.
@@ -134,7 +138,8 @@ typedef unsigned long bitset_index_t;
      * @param index Index of source bit.
      */
     #define bitset_getbit(name, index)\
-        ((index >= bitset_size(name)) ? \
+        index
+        //((index >= bitset_size(name)) ? \
          (error_exit("bitset_getbit: Index %lu mimo rozsah 0..%lu\n", \
              (unsigned long)index, (unsigned long)bitset_size(name)-1), 0) : \
          (getbit(name, index)))
