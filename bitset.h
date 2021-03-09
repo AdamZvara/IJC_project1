@@ -20,31 +20,27 @@ typedef unsigned long bitset_index_t;
 #define ITEM_SIZE (sizeof(unsigned long)*CHAR_BIT) //</Size of a single item in bitset
 #define MAX_LEN 200000000 //</Maximum range of bitset
 
-#define SIZE_ERROR "Velkost pola musi byt v rozmedzi <0,200000000>"
-
 /**
  * @brief Initialize bitset, first value is set to the size of bitset in bits.
  * @param name Name of a new bitset.
  * @param size Size of bitset in bits.
- * @todo Improve creating smaller bitset, if size == 32*k
- * @detail Creating bitset where size = 0 is possible. 
  */
 #define bitset_create(name, size)\
-    unsigned long name[size/ITEM_SIZE+2] = {size};\
-    _Static_assert((size >= 0), SIZE_ERROR)
+    unsigned long name[\
+        ((size%ITEM_SIZE) ? (size/ITEM_SIZE+2) : (size/ITEM_SIZE+1))] = {size};\
+    _Static_assert((size > 0), "Velkost pola musi byt vacsia nez 0")
 
 /**
  * @brief Initialize bitset dynamically, first value is set to the size of bitset in bits.
  * @param name Name of a new bitset.
  * @param size Size of bitset in bits. 
- * @detail Creating bitset where size = 0 is possible. 
  */
 #define bitset_alloc(name, size)\
     unsigned long *name = calloc(size/ITEM_SIZE+2, sizeof(unsigned long));\
     ((name == NULL) ? \
         (error_exit("bitset_alloc: Chyba alokace pameti\n"),0) : \
         (name[0] = size));\
-    assert(size >= 0);\
+    assert(size > 0);\
     assert(size <= MAX_LEN)
 /**
  * @brief Set a single bit in bitset to a given value.
