@@ -11,5 +11,7 @@ Prva cast - implementacia vypoctu prvocisel pomocou eratosthenovho sita.
     praca s gitom
     zakladna strukturovana dokumentacia projektu pomocou doxygenu
 
-Druha cast - 
-    flexible array in structure
+Druha cast - pouzivanie predosleho bitsetu, dekodovanie spravy
+    flexible array member
+    variadic function - funkcia s premmenym poctom argumentov (...) - eclipse
+    bitove operacie

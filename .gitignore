@@ -5,3 +5,4 @@ primes-i
 *.swp
 *.o
 ppm
+test_bitset
