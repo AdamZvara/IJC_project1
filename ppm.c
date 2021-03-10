@@ -35,7 +35,7 @@ struct ppm * ppm_read(const char* filename)
         return NULL;
     }
     
-    if ((xsize <= 0) || (ysize <= 0))
+    if ((xsize <= 0) || (ysize <= 0) || (xsize > MAX_SIZE) || (ysize > MAX_SIZE))
     {
         warning_msg("Neplatna velkost obrazku\n");
         fclose(fr);
@@ -54,7 +54,7 @@ struct ppm * ppm_read(const char* filename)
     image->ysize = ysize;
 
     int c, i = 0;
-    while ((c = fgetc(fr)) != EOF)
+    while (((c = fgetc(fr)) != EOF) && (i < xsize*ysize*3))
     {
         image->data[i++] = c;
     }

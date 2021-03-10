@@ -10,20 +10,27 @@
 #include "ppm.h"
 #include "eratosthenes.h"
 
-#define MAX_IMAGE_SIZE 8000*8000*3
 #define START 23
+#define MESSAGE_LENGTH 100
 
-void message_resize(char *name, unsigned int size)
+void free_all(struct ppm* image, bitset_t bset, char * message)
 {
-    void *new_name = realloc(name, size);
+    bitset_free(bset);
+    ppm_free(image);
+    free(message);
+}
+
+void message_resize(char *msg_name, const unsigned int size, struct ppm *image, bitset_t bset)
+{
+    void *new_name = realloc(msg_name, size);
 
     if (new_name == NULL)
     {
-        if (name != NULL) free(name);
-        error_exit("Alokacia spravy neprebehla spravne\n");
+        free_all(image, bset, msg_name);
+        error_exit("Realokacia spravy neprebehla spravne\n");
     }
 
-    name = new_name;
+    msg_name = new_name;
 }
 
 int main(int argc, char *argv[])
@@ -35,34 +42,28 @@ int main(int argc, char *argv[])
     
     struct ppm *image = ppm_read(argv[1]);
 
-    if (image == NULL)
-    {
-        error_exit("Subor sa nepodarilo precitat\n");
-    }
+    if (image == NULL) return 1;
 
     const long size = (image->xsize)*(image->ysize)*3;
-    if (size > MAX_IMAGE_SIZE)
-    {
-        ppm_free(image);
-        error_exit("Obrazok ma prilis velke rozmery\n");
-    }
 
+    //creating bitset with primes numbers
     bitset_alloc(bset, size);
-
     Eratosthenes(bset);
 
-    unsigned int bit_counter = 0;
-    unsigned int character = 0;
-    
-    unsigned int length = 100;
-    unsigned int character_count = 0;
+    unsigned int bit_counter = 0,
+                 character = 0,
+                 character_count = 0,
+                 length = MESSAGE_LENGTH;
+
+    bool end_bit = false;
+        
+    //allocating message
     char *message = malloc(length);
     if (message == NULL)
     {
-        ppm_free(image);
+        free_all(image, bset, message);
         error_exit("Chyba pri alokacii spravy");
     }
-    bool end_bit = false;
     
     for (bitset_index_t i = START; i < bitset_size(bset); i++)
     {
@@ -77,8 +78,8 @@ int main(int argc, char *argv[])
             {
                 if (character_count / length)
                 {
-                    length += 100;
-                    message_resize(message, length);
+                    length += MESSAGE_LENGTH;
+                    message_resize(message, length, image, bset);
                 }
 
                 message[character_count++] = character;
@@ -101,8 +102,7 @@ int main(int argc, char *argv[])
 
     if (end_bit == false)
     {
-        free(message);
-        ppm_free(image);
+        free_all(image, bset, message);
         error_exit("Sprava nebola spravne ukoncena\n");
     }
     else
@@ -110,8 +110,6 @@ int main(int argc, char *argv[])
         printf("%s", message);
     }
     
-    free(message);
-    bitset_free(bset);
-    ppm_free(image);
+    free_all(image, bset, message);
     return 0;
 }
