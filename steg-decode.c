@@ -11,7 +11,7 @@
 #include "eratosthenes.h"
 
 #define START 23
-#define MESSAGE_LENGTH 100
+#define MESSAGE_LENGTH 10
 
 void free_all(struct ppm* image, bitset_t bset, char * message)
 {
@@ -37,28 +37,26 @@ int main(int argc, char *argv[])
 {
     if (argc != 2)
     {
-        error_exit("Nespravny pocet argumentov\n");
+        error_exit("Usage: ./steg-decode image.ppm\n");
     }
     
     struct ppm *image = ppm_read(argv[1]);
-
     if (image == NULL) return 1;
-
-    const long size = (image->xsize)*(image->ysize)*3;
-
-    //creating bitset with primes numbers
-    bitset_alloc(bset, size);
-    Eratosthenes(bset);
 
     unsigned int bit_counter = 0,
                  character = 0,
                  character_count = 0,
-                 length = MESSAGE_LENGTH;
+                 msg_length = MESSAGE_LENGTH;
 
     bool end_bit = false;
         
+    //creating bitset with primes numbers
+    const long size = (image->xsize)*(image->ysize)*3;
+    bitset_alloc(bset, size);
+    Eratosthenes(bset);
+    
     //allocating message
-    char *message = malloc(length);
+    char *message = malloc(msg_length);
     if (message == NULL)
     {
         free_all(image, bset, message);
@@ -74,12 +72,12 @@ int main(int argc, char *argv[])
                 character |= (1 << bit_counter);
             }
             
-            if (bit_counter == 7)
+            if (bit_counter == (CHAR_BIT-1)) // character is full
             {
-                if (character_count / length)
+                if (character_count / msg_length)
                 {
-                    length += MESSAGE_LENGTH;
-                    message_resize(message, length, image, bset);
+                    msg_length += MESSAGE_LENGTH;
+                    message_resize(message, msg_length, image, bset);
                 }
 
                 message[character_count++] = character;

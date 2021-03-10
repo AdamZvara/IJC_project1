@@ -8,11 +8,11 @@ bitset_create(global, 128);
 
 int main(void)
 {
+    bitset_create(ceil, 3200L);
     printf("lokalne makra:\n");
     len(global);
     bitset_create(exactly, 25);
     len(exactly);
-    bitset_create(ceil, 3200L);
     len(ceil);
     static bitset_create(statbset, 20);
     len(statbset);
@@ -22,18 +22,21 @@ int main(void)
     
     printf("dynamicke makra:\n");
 
-    bitset_alloc(bset_alloc, 128);
+    bitset_alloc(bset_alloc, -1);
     bitset_setbit(bset_alloc, 127, 1);
     bitset_alloc(aset_alloc, 100);
     bitset_setbit(aset_alloc, 99, 1);
     //bitset_alloc(wrong, 2000000000);
     //bitset_alloc(wrong, -5);
     //
+    
+    printf("%lu", bitset_size(bset_alloc));
+
     bitset_free(bset_alloc);
     bitset_free(aset_alloc);
-
-    printf("%u", bitset_getbit(ceil, 3250));
-    bitset_setbit(exactly, 25L, 0);
+    
+    //bitset_setbit(exactly, 30, 0);
+    bitset_getbit(ceil, 3500);
     return 0;
 }
 

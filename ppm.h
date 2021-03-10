@@ -28,6 +28,8 @@ struct ppm
     char data[];
 };
 
+int ppm_get_size(FILE *fr, int *xsize, int *ysize);
+
 /**
  * @brief Extract data from file to structure ppm.
  * @param filename Name of the file with PPM format.
