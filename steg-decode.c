@@ -62,6 +62,7 @@ int main(int argc, char *argv[])
     }
     
     for (bitset_index_t i = START; i < bitset_size(bset); i++)
+    //for (bitset_index_t i = START; i < 10; i++)
     {
         if (bitset_getbit(bset, i) == 0)
         {

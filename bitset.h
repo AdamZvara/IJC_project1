@@ -32,19 +32,19 @@ typedef unsigned long bitset_index_t;
     _Static_assert((size > 0), "Velkost pola musi byt vacsia nez 0")
 
 /**
- * @brief Initialize bitset dynamically, first value is set to the size of bitset in bits.
- * @param name Name of a new bitset.
- * @param size Size of bitset in bits. 
- * @details Only works with whole numbers (int, long, unsigned long ..).
- */
+* @brief Initialize bitset dynamically, first value is set to the size of bitset in bits.
+* @param name Name of a new bitset.
+* @param size Size of bitset in bits. 
+* @details Only works with whole numbers (int, long, unsigned long ..).
+*/
 #define bitset_alloc(name, size)\
+    assert(size > 0);\
+    assert(size <= MAX_LEN);\
     unsigned long *name = calloc(\
         ((size%ITEM_SIZE) ? (size/ITEM_SIZE+2) : (size/ITEM_SIZE+1)), sizeof(unsigned long));\
     ((name == NULL) ? \
         (error_exit("bitset_alloc: Chyba alokace pameti\n"),0) : \
-        (name[0] = size));\
-    assert(size > 0);\
-    assert(size <= MAX_LEN)
+        (name[0] = size));
 
 /**
  * @brief Set a single bit in bitset to a given value.
@@ -68,7 +68,6 @@ typedef unsigned long bitset_index_t;
 
 //Inline functions are similiar to macros defined underneath them.
 #ifdef USE_INLINE
-
     inline void bitset_free(bitset_t name)
     {
         free(name);
@@ -108,6 +107,7 @@ typedef unsigned long bitset_index_t;
     }
 
 #else
+
     /**
      * @brief Frees previously allocated bitset.
      * @param name Name of the bitset.
