@@ -11,7 +11,7 @@
 #include "eratosthenes.h"
 
 #define START 23
-#define MESSAGE_LENGTH 10
+#define MESSAGE_LENGTH 100
 
 void free_all(struct ppm* image, bitset_t bset, char * message)
 {
@@ -20,17 +20,15 @@ void free_all(struct ppm* image, bitset_t bset, char * message)
     free(message);
 }
 
-void message_resize(char *msg_name, const unsigned int size, struct ppm *image, bitset_t bset)
+void message_resize(char **message, int size, struct ppm *image, bitset_t bset)
 {
-    void *new_name = realloc(msg_name, size);
-
-    if (new_name == NULL)
+    char *test = (char *)realloc(*message, size);
+    if (test == NULL)
     {
-        free_all(image, bset, msg_name);
-        error_exit("Realokacia spravy neprebehla spravne\n");
+        free_all(image, bset, *message);
+        error_exit("Chyba pri realokacii spravy\n");
     }
-
-    msg_name = new_name;
+    *message = test;
 }
 
 int main(int argc, char *argv[])
@@ -56,7 +54,7 @@ int main(int argc, char *argv[])
     Eratosthenes(bset);
     
     //allocating message
-    char *message = malloc(msg_length);
+    char *message = (char *)malloc(msg_length);
     if (message == NULL)
     {
         free_all(image, bset, message);
@@ -74,10 +72,10 @@ int main(int argc, char *argv[])
             
             if (bit_counter == (CHAR_BIT-1)) // character is full
             {
-                if (character_count / msg_length)
+                if ((character_count != 0) && (character_count % 10 == 0))
                 {
                     msg_length += MESSAGE_LENGTH;
-                    message_resize(message, msg_length, image, bset);
+                    message_resize(&message, msg_length, image, bset);
                 }
 
                 message[character_count++] = character;
