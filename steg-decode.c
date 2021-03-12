@@ -3,7 +3,7 @@
  * @file steg-decode.c
  * @author Adam Zvara - xzvara01, FIT
  * @date 7.3.2021
- * @details Compiled with GCC 9.3.0
+ * @details Compiled with GCC 9.3.0 tested on Ubuntu 20.04.1
  */
 
 #include <stdbool.h>

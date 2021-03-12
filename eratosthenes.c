@@ -3,7 +3,7 @@
  * @file eratosthenes.c
  * @author Adam Zvara - xzvara01, FIT
  * @date 6.3.2021
- * @details Compiled with gcc 9.3.0 - Ubuntu 20.04.1 
+ * @details Compiled with gcc 9.3.0 tested on Ubuntu 20.04.1 
  */
 
 #include <math.h>

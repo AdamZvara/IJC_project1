@@ -12,34 +12,28 @@
 #define PPM_H
 
 /**
+ * @brief Structure to store data from ppm file
  * @struct ppm
- * @brief Structure (with flexible array) used to store data from PPM image format.
- * @var ppm::xsize
- * Member 'xsize' contains width of image (in pixels).
- * @var ppm::ysize
- * Member 'ysize' contains height of image (in pixels).
- * @var ppm::data
- * Member 'data' is flexible array used to store RGB byte values from image.
  */
 struct ppm 
 {
-    unsigned xsize;
-    unsigned ysize;
-    char data[];
+    unsigned xsize; /**< Width of image in pixels*/
+    unsigned ysize; /**< Height of image in pixels*/
+    char data[];    /**< Flexible array used to store RGB byte values from image*/
 };
 
 int ppm_get_size(FILE *fr, int *xsize, int *ysize);
 
 /**
- * @brief Extract data from file to structure ppm.
- * @param filename Name of the file with PPM format.
- * @return ppm* Pointer to a dynamically allocated structure.
+ * @brief Extract data from file to structure ppm
+ * @param filename Name of the file with PPM format
+ * @return ppm* Pointer to a dynamically allocated structure
  */
 struct ppm * ppm_read(const char* filename);
 
 /**
- * @brief Frees previously allocated ppm structure.
- * @param ppm Pointer to the structure to free.
+ * @brief Frees previously allocated ppm structure
+ * @param ppm Pointer to the structure to free
  */
 void ppm_free(struct ppm *p);
 
