@@ -1,4 +1,4 @@
-Prvy projekt predmetu IJC.
+Moje riešenie prvého projektu z predmetu IJC (FIT VUT 2020/2021) - [zadanie](assignment.html)
 
 Prva cast - implementacia vypoctu prvocisel pomocou eratosthenovho sita.
     vytvorenie bitoveho pola - vsetky "funkcie" pre pracu s bitovym polom boli vytvorene ako 
